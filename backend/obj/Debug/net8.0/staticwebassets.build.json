@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "vt6r5b59rPoSiS90JjVHwqf2c4hKhpBo7Z+/gFsjB0w=",
+  "Source": "ChurchPulse.API",
+  "BasePath": "_content/ChurchPulse.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
