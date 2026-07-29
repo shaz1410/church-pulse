@@ -6,13 +6,27 @@ using System.Text;
 using ChurchPulse.API.Interfaces;
 using ChurchPulse.API.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
+
+
+// Enable CORS for React frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 // Add services
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -41,15 +55,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
 // Register Entity Framework
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//Register the service
+
+// Register services
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+
+// JWT Configuration
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 
 builder.Services.AddAuthentication(options =>
@@ -74,22 +92,34 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
 builder.Services.AddAuthorization();
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+// Configure HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
+
+// Enable CORS BEFORE Authentication
+app.UseCors("AllowFrontend");
+
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
+
 app.MapControllers();
+
 
 app.Run();
