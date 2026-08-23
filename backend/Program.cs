@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ChurchPulse.API.Interfaces;
 using ChurchPulse.API.Services;
+using ChurchPulse.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,11 @@ builder.Services.AddCors(options =>
 
 // Add services
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<
+    IMemberRepository,
+    MemberRepository
+>();
 
 builder.Services.AddEndpointsApiExplorer();
 

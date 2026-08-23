@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/tempadmin/church-pulse/backend/ChurchPulse.API.csproj": {}
+    "C:\\Users\\mthem\\church-pulse\\backend\\ChurchPulse.API.csproj": {}
   },
   "projects": {
-    "/home/tempadmin/church-pulse/backend/ChurchPulse.API.csproj": {
+    "C:\\Users\\mthem\\church-pulse\\backend\\ChurchPulse.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/tempadmin/church-pulse/backend/ChurchPulse.API.csproj",
+        "projectUniqueName": "C:\\Users\\mthem\\church-pulse\\backend\\ChurchPulse.API.csproj",
         "projectName": "ChurchPulse.API",
-        "projectPath": "/home/tempadmin/church-pulse/backend/ChurchPulse.API.csproj",
-        "packagesPath": "/home/tempadmin/.nuget/packages/",
-        "outputPath": "/home/tempadmin/church-pulse/backend/obj/",
+        "projectPath": "C:\\Users\\mthem\\church-pulse\\backend\\ChurchPulse.API.csproj",
+        "packagesPath": "C:\\Users\\mthem\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mthem\\church-pulse\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/tempadmin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\mthem\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -96,7 +101,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.129/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.423/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
