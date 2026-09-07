@@ -120,4 +120,52 @@ public class AuthController : ControllerBase
             token
         });
     }
+
+    [HttpPost("admin-register")]
+public async Task<IActionResult> AdminRegister(AdminRegisterDto dto)
+{
+    try
+    {
+        var admin = await _authService.AdminRegisterAsync(dto);
+
+        return Ok(new
+        {
+            message = "Administrator account created successfully.",
+            admin.Id,
+            admin.FullName,
+            admin.Surname,
+            admin.MobileNumber,
+            admin.DateOfBirth,
+            admin.Email,
+            admin.Role
+        });
+    }
+   catch (Exception ex)
+    {
+    return BadRequest(new
+    {
+        message = ex.Message,
+        innerException = ex.InnerException?.Message
+    });
+    }
+}
+
+    [HttpPost("admin-login")]
+public async Task<IActionResult> AdminLogin(AdminLoginDto dto)
+{
+    var token = await _authService.AdminLoginAsync(dto);
+
+    if (token == null)
+    {
+        return Unauthorized(new
+        {
+            message = "Invalid admin details."
+        });
+    }
+
+    return Ok(new
+    {
+        token
+    });
+}
 }

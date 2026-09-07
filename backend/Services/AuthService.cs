@@ -31,7 +31,7 @@ public class AuthService : IAuthService
             FullName = dto.FullName,
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            Role = dto.Role,
+            Role = "Member",
             CreatedAt = DateTime.UtcNow
         };
 
@@ -41,6 +41,34 @@ public class AuthService : IAuthService
 
         return user;
     }
+
+    public async Task<User> AdminRegisterAsync(AdminRegisterDto dto)
+{
+    if (await _context.Users.AnyAsync(x => x.Email == dto.Email))
+        throw new Exception("Email already exists.");
+
+    if (await _context.Users.AnyAsync(x => x.Role == "Admin"))
+        throw new Exception("An administrator account already exists.");
+
+    var admin = new User
+    {
+        Id = Guid.NewGuid(),
+        FullName = dto.FullName,
+        Surname = dto.Surname,
+        MobileNumber = dto.MobileNumber,
+        DateOfBirth = DateTime.SpecifyKind(dto.DateOfBirth, DateTimeKind.Utc),
+        Email = dto.Email,
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+        Role = "Admin",
+        CreatedAt = DateTime.UtcNow
+    };
+
+    _context.Users.Add(admin);
+
+    await _context.SaveChangesAsync();
+
+    return admin;
+}
 
     public async Task<string?> LoginAsync(LoginDto dto)
     {
@@ -59,4 +87,25 @@ public class AuthService : IAuthService
 
         return _jwtService.GenerateToken(user);
     }
+
+ public async Task<string?> AdminLoginAsync(AdminLoginDto dto)
+{
+    var user = await _context.Users
+        .FirstOrDefaultAsync(x =>
+            x.Email == dto.Email &&
+            x.Role == "Admin");
+
+    if (user == null)
+        return null;
+
+    var validPassword = BCrypt.Net.BCrypt.Verify(
+        dto.Password,
+        user.PasswordHash);
+
+    if (!validPassword)
+        return null;
+
+    return _jwtService.GenerateToken(user);
 }
+}
+

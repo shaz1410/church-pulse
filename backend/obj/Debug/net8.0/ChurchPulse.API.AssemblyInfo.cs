@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ChurchPulse.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+def5e7c19bc93da7e22c18137d370e9fc5b55e44")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ecdf711bc2665e9a416d08aa73fc2492611b992")]
 [assembly: System.Reflection.AssemblyProductAttribute("ChurchPulse.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ChurchPulse.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

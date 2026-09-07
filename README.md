@@ -48,3 +48,56 @@ The goal of ChurchPulse is to replace manual membership registers with a secure,
 - Prayer request management
 - Donations and contributions tracking
 - Analytics dashboard
+
+
+## HOW TO  RUN 
+Terminal 1:
+
+cd C:/Users/mthem/church-pulse/backend
+dotnet run
+
+Terminal 2:
+
+cd C:/Users/mthem/church-pulse/frontend
+npm run dev
+
+## GUIDLINE TO RUN
+1. Start PostgreSQL
+
+Make sure your PostgreSQL service is running first.
+
+2. Start the backend
+
+Open Terminal 1:
+cd C:/Users/mthem/church-pulse/backend
+
+Then:
+dotnet run
+
+You should see:
+Now listening on: http://localhost:5204
+
+Application started.
+Leave this terminal running.
+
+Your API is now available at:
+http://localhost:5204
+
+Swagger should be available at:
+http://localhost:5204/swagger
+
+3. Start the frontend
+
+Open Terminal 2 — don't stop the backend terminal.
+
+Go to your frontend folder:
+cd C:/Users/mthem/church-pulse/frontend
+
+Then:
+npm run dev
+
+You should see something like:
+Local: http://localhost:5173/
+
+Open:
+http://localhost:5173
