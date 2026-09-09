@@ -12,3 +12,26 @@ body {
   background-color: #f8fafc;
   font-family: Inter, system-ui, sans-serif;
 }
+
+
+/* --- Dashboard & Quick Action Custom Styles --- */
+
+.quick-actions button,
+.btn-action {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 10;
+  transition: all 0.2s ease-in-out;
+}
+
+.quick-actions button:hover,
+.btn-action:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.quick-actions button:active,
+.btn-action:active {
+  transform: translateY(0);
+}

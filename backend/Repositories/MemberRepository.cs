@@ -14,23 +14,24 @@ public class MemberRepository : IMemberRepository
         _context = context;
     }
 
-    public async Task<bool> MemberExistsAsync(
-        string mobileNumber
-    )
+    public async Task<bool> MemberExistsAsync(string mobileNumber)
     {
         return await _context.Members.AnyAsync(
             m => m.MobileNumber == mobileNumber
         );
     }
 
-    public async Task<Member> AddMemberAsync(
-        Member member
-    )
+    public async Task<Member> AddMemberAsync(Member member)
     {
         _context.Members.Add(member);
-
         await _context.SaveChangesAsync();
-
         return member;
+    }
+
+    public async Task<IEnumerable<Member>> GetAllMembersAsync()
+    {
+        return await _context.Members
+            .OrderByDescending(m => m.JoinedDate)
+            .ToListAsync();
     }
 }
