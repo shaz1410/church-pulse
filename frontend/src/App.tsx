@@ -9,6 +9,7 @@ import MemberProfile from "./pages/MemberProfile";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import AdminLogin from "./pages/AdminLogin";
+import MemberDashboard from "./pages/MemberDashboard";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/member-dashboard" element={<MemberDashboard />} />
         </Routes>
     );
 }

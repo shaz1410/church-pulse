@@ -44,7 +44,7 @@ export default function Login() {
             localStorage.setItem("churchPulseToken", data.token);
 
             // Redirect to the member dashboard
-            navigate("/dashboard");
+            navigate("/member-dashboard");
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
