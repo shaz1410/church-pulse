@@ -19,6 +19,7 @@ public class MembersController : ControllerBase
     }
 
    [HttpPost("register")]
+[AllowAnonymous]
 public async Task<IActionResult> Register([FromBody] CreateMemberDto dto)
 {
     var exists = await _repository.MemberExistsAsync(dto.MobileNumber);
@@ -27,8 +28,7 @@ public async Task<IActionResult> Register([FromBody] CreateMemberDto dto)
     {
         return BadRequest(new
         {
-            message = "This mobile number is already registered."
-        });
+            message = "This mobile number is already registered."       });
     }
 
     if (string.IsNullOrWhiteSpace(dto.Password))
