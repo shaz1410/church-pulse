@@ -15,4 +15,6 @@ public class Member
     public DateTime JoinedDate { get; set; } = DateTime.UtcNow;
 
     public string Status { get; set; } = "Active";
+
+    public string PasswordHash { get; set; } = string.Empty;
 }

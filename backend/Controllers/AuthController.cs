@@ -168,4 +168,23 @@ public async Task<IActionResult> AdminLogin(AdminLoginDto dto)
         token
     });
 }
+
+[HttpPost("member-login")]
+public async Task<IActionResult> MemberLogin(MemberLoginDto dto)
+{
+    var token = await _authService.MemberLoginAsync(dto);
+
+    if (token == null)
+    {
+        return Unauthorized(new
+        {
+            message = "Invalid mobile number or password."
+        });
+    }
+
+    return Ok(new
+    {
+        token
+    });
+}
 }

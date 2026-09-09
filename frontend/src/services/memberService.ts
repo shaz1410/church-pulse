@@ -5,6 +5,7 @@ export async function registerMember(member: {
     surname: string;
     mobileNumber: string;
     dateOfBirth: string;
+    password: string;
 }) {
     const response = await fetch(`${API_URL}/register`, {
         method: "POST",
@@ -17,7 +18,7 @@ export async function registerMember(member: {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message);
+        throw new Error(data.message || "Registration failed.");
     }
 
     return data;

@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Text;
 using ChurchPulse.API.Interfaces;
 using ChurchPulse.API.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ChurchPulse.API.Services;
@@ -19,26 +18,44 @@ public class JwtService : IJwtService
 
     public string GenerateToken(User user)
     {
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Name, user.FullName),
+            new Claim(ClaimTypes.Role, user.Role)
+        };
+
+        return GenerateToken(claims);
+    }
+
+    public string GenerateToken(Member member)
+    {
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, member.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Name, $"{member.FullNames} {member.Surname}"),
+            new Claim(ClaimTypes.Role, "Member")
+        };
+
+        return GenerateToken(claims);
+    }
+
+    private string GenerateToken(List<Claim> claims)
+    {
         var jwtSettings = _configuration.GetSection("Jwt");
 
         var key = jwtSettings["Key"]
-            ?? throw new InvalidOperationException("JWT Key is not configured.");
+            ?? throw new InvalidOperationException(
+                "JWT Key is not configured.");
 
         var issuer = jwtSettings["Issuer"];
         var audience = jwtSettings["Audience"];
 
         var expiryInMinutes = int.Parse(
             jwtSettings["ExpiryInMinutes"] ?? "60");
-
-        var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
 
         var securityKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(key));

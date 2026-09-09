@@ -107,5 +107,24 @@ public class AuthService : IAuthService
 
     return _jwtService.GenerateToken(user);
 }
+
+public async Task<string?> MemberLoginAsync(MemberLoginDto dto)
+{
+    var member = await _context.Members
+        .FirstOrDefaultAsync(x =>
+            x.MobileNumber == dto.MobileNumber);
+
+    if (member == null)
+        return null;
+
+    var validPassword = BCrypt.Net.BCrypt.Verify(
+        dto.Password,
+        member.PasswordHash);
+
+    if (!validPassword)
+        return null;
+
+    return _jwtService.GenerateToken(member);
+}
 }
 

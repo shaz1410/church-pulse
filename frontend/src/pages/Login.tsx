@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -5,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Login() {
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
+    const [mobileNumber, setMobileNumber] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -18,14 +19,14 @@ export default function Login() {
 
         try {
             const response = await fetch(
-                "http://localhost:5204/api/Auth/admin-login",
+                "http://localhost:5204/api/Auth/member-login",
                 {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        email,
+                        mobileNumber,
                         password,
                     }),
                 }
@@ -35,18 +36,20 @@ export default function Login() {
 
             if (!response.ok) {
                 throw new Error(
-                    data.message || "Invalid email or password."
+                    data.message || "Invalid mobile number or password."
                 );
             }
 
+            // Save the JWT token
             localStorage.setItem("churchPulseToken", data.token);
 
+            // Redirect to the member dashboard
             navigate("/dashboard");
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
             } else {
-                setError("Something went wrong.");
+                setError("Something went wrong. Please try again.");
             }
         } finally {
             setLoading(false);
@@ -56,12 +59,13 @@ export default function Login() {
     return (
         <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
             <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg">
+
                 <h1 className="mb-2 text-center text-3xl font-bold text-blue-600">
-                    Admin Login
+                    Member Login
                 </h1>
 
                 <p className="mb-6 text-center text-slate-500">
-                    Sign in to manage church members.
+                    Login with your registered mobile number and password.
                 </p>
 
                 {error && (
@@ -71,23 +75,28 @@ export default function Login() {
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+
+                    {/* Mobile Number */}
                     <div>
-                        <label className="mb-1 block font-medium">
-                            Email Address
+                        <label className="mb-1 block font-medium text-slate-700">
+                            Mobile Number
                         </label>
 
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="admin@churchpulse.com"
+                            type="tel"
+                            value={mobileNumber}
+                            onChange={(e) =>
+                                setMobileNumber(e.target.value)
+                            }
+                            placeholder="Enter your mobile number"
                             className="w-full rounded-lg border p-3 outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         />
                     </div>
 
+                    {/* Password */}
                     <div>
-                        <label className="mb-1 block font-medium">
+                        <label className="mb-1 block font-medium text-slate-700">
                             Password
                         </label>
 
@@ -101,6 +110,7 @@ export default function Login() {
                         />
                     </div>
 
+                    {/* Login Button */}
                     <button
                         type="submit"
                         disabled={loading}
@@ -110,15 +120,28 @@ export default function Login() {
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-slate-500">
-                    Not an administrator?{" "}
-                    <Link
-                        to="/register"
-                        className="font-semibold text-blue-600 hover:underline"
-                    >
-                        Register as a member
-                    </Link>
-                </p>
+                <div className="mt-6 space-y-3 text-center text-sm text-slate-500">
+
+                    <p>
+                        Not registered yet?{" "}
+                        <Link
+                            to="/register"
+                            className="font-semibold text-blue-600 hover:underline"
+                        >
+                            Register as a Member
+                        </Link>
+                    </p>
+
+                    <p>
+                        <Link
+                            to="/"
+                            className="font-semibold text-blue-600 hover:underline"
+                        >
+                            Back to Welcome Page
+                        </Link>
+                    </p>
+
+                </div>
             </div>
         </div>
     );

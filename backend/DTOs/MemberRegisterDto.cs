@@ -1,6 +1,6 @@
 namespace ChurchPulse.API.DTOs;
 
-public class CreateMemberDto
+public class MemberRegisterDto
 {
     public string FullNames { get; set; } = string.Empty;
 
@@ -11,4 +11,4 @@ public class CreateMemberDto
     public DateTime DateOfBirth { get; set; }
 
     public string Password { get; set; } = string.Empty;
-}
+ }

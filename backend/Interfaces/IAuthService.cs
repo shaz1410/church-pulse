@@ -12,4 +12,6 @@ public interface IAuthService
     Task<string?> AdminLoginAsync(AdminLoginDto adminLoginDto);
 
     Task<User> AdminRegisterAsync(AdminRegisterDto adminRegisterDto);
+
+    Task<string?> MemberLoginAsync(MemberLoginDto memberLoginDto);
 }
