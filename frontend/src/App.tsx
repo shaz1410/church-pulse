@@ -10,6 +10,7 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import AdminLogin from "./pages/AdminLogin";
 import MemberDashboard from "./pages/MemberDashboard";
+import Events from "./pages/Events";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/members" element={<Members />} />
+            <Route path="/events" element={<Events />} />
             <Route path="/profile" element={<MemberProfile />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />

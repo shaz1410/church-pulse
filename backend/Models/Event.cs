@@ -1,12 +1,27 @@
-namespace ChurchPulse.API.Models;
+using System.ComponentModel.DataAnnotations;
 
-public class Event
+namespace ChurchPulse.API.Models
 {
-    public Guid Id { get; set; }
+    public class Event
+    {
+        [Key]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-    public string Title { get; set; } = string.Empty;
+        [Required]
+        [MaxLength(150)]
+        public string Title { get; set; } = string.Empty;
 
-    public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
 
-    public DateTime EventDate { get; set; }
+        [Required]
+        public DateTime EventDate { get; set; }
+
+        [MaxLength(100)]
+        public string Location { get; set; } = "Main Church Auditorium";
+
+        [MaxLength(50)]
+        public string Category { get; set; } = "General";
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
 }

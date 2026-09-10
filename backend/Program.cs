@@ -1,3 +1,4 @@
+using ChurchPulse.API.Models;
 using ChurchPulse.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -126,6 +127,35 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    // Auto-create missing database tables/migrations
+    context.Database.Migrate();
+
+    // Check if admin user exists; if not, create it with a valid BCrypt hash
+    if (!context.Users.Any(u => u.Email == "admin@churchpulse.com"))
+    {
+        var adminUser = new User
+        {
+            Id = Guid.NewGuid(),
+            FullName = "Admin User",
+            Surname = "System",
+            Email = "admin@churchpulse.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@12345"),
+            Role = "Admin",
+            MobileNumber = "0000000000",
+            DateOfBirth = DateTime.UtcNow.AddYears(-30),
+            CreatedAt = DateTime.UtcNow
+        };
+
+        context.Users.Add(adminUser);
+        context.SaveChanges();
+        Console.WriteLine("--> Success: Admin user seeded successfully! (admin@churchpulse.com / Admin@12345)");
+    }
+}
 
 
 app.Run();

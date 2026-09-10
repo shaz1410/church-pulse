@@ -1,74 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { StatCard } from '../components/dashboard/StatCard';
-import { QuickAction } from '../components/dashboard/QuickAction';
-import { RecentMembers } from '../components/dashboard/RecentMembers';
+import { Link } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
 
-interface DashboardStats {
-  totalMembers: number;
-  newMembers: number;
-  activeMembers: number;
-  visitors: number;
-  recentRegistrations: Array<{
-    id: number;
-    name: string;
-    joinedDate: string;
-  }>;
+export default function Dashboard() {
+    return (
+        <div className="flex min-h-screen bg-slate-50">
+            {/* 1. Add Sidebar to left side of Dashboard */}
+            <Sidebar />
+
+            <main className="flex-1 p-8">
+                <h1 className="text-2xl font-bold text-slate-800 mb-6">Church Dashboard</h1>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4">
+                        <span className="text-2xl bg-purple-100 p-3 rounded-lg">👥</span>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase">Total Members</p>
+                            <p className="text-2xl font-bold text-slate-800">0</p>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4">
+                        <span className="text-2xl bg-amber-100 p-3 rounded-lg">✨</span>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase">New Members</p>
+                            <p className="text-2xl font-bold text-slate-800">0</p>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4">
+                        <span className="text-2xl bg-orange-100 p-3 rounded-lg">⚡</span>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase">Active Members</p>
+                            <p className="text-2xl font-bold text-slate-800">0</p>
+                        </div>
+                    </div>
+                    <div className="bg-white p-5 rounded-xl border border-slate-200 flex items-center gap-4">
+                        <span className="text-2xl bg-yellow-100 p-3 rounded-lg">🤝</span>
+                        <div>
+                            <p className="text-xs font-semibold text-slate-400 uppercase">Visitors</p>
+                            <p className="text-2xl font-bold text-slate-800">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Content Sections */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {/* Quick Actions Column */}
+                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4">Quick Actions</h2>
+                        <div className="flex flex-col gap-3">
+                            <Link to="/register" className="p-3 border rounded-lg hover:bg-slate-50 flex items-center gap-3 font-medium text-slate-700">
+                                <span>➕</span> Register a Member
+                            </Link>
+                            <Link to="/members" className="p-3 border rounded-lg hover:bg-slate-50 flex items-center gap-3 font-medium text-slate-700">
+                                <span>👥</span> View Members
+                            </Link>
+                            {/* 2. Added Manage Events Quick Action */}
+                            <Link to="/events" className="p-3 border rounded-lg hover:bg-slate-50 flex items-center gap-3 font-medium text-slate-700">
+                                <span>📅</span> Manage Events
+                            </Link>
+                            <Link to="/reports" className="p-3 border rounded-lg hover:bg-slate-50 flex items-center gap-3 font-medium text-slate-700">
+                                <span>📊</span> Generate Reports
+                            </Link>
+                        </div>
+                    </div>
+
+                    {/* Recent Registrations Column */}
+                    <div className="md:col-span-2 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h2 className="text-lg font-bold text-slate-800 mb-4">Recent Registrations</h2>
+                        <p className="text-slate-500 text-sm">No recent member registrations found.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    );
 }
-
-export const Dashboard: React.FC = () => {
-  const [stats, setStats] = useState<DashboardStats>({
-    totalMembers: 0,
-    newMembers: 0,
-    activeMembers: 0,
-    visitors: 0,
-    recentRegistrations: [],
-  });
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // Fetch statistics from backend API
-  const fetchDashboardStats = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5204/api/Dashboard/stats', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setStats(response.data);
-    } catch (error) {
-      console.error('Error fetching dashboard stats:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboardStats();
-  }, []);
-
-  return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-gray-800">Church Dashboard</h1>
-      </div>
-
-      {/* Stat Cards Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Total Members" value={loading ? '...' : stats.totalMembers} icon="👥" />
-        <StatCard title="New Members" value={loading ? '...' : stats.newMembers} icon="✨" />
-        <StatCard title="Active Members" value={loading ? '...' : stats.activeMembers} icon="⚡" />
-        <StatCard title="Visitors" value={loading ? '...' : stats.visitors} icon="🤝" />
-      </div>
-
-      {/* Main Grid: Quick Actions & Recent Members */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        {/* Render QuickAction with refresh callback */}
-        <QuickAction onMemberAdded={fetchDashboardStats} />
-        
-        {/* Render Live Recent Members */}
-        <RecentMembers members={stats.recentRegistrations} />
-      </div>
-    </div>
-  );
-};
-
-export default Dashboard;

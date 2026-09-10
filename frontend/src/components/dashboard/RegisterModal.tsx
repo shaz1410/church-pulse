@@ -19,6 +19,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     email: '',
     address: '',
     dateOfBirth: '',
+    password: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         email: formData.email.trim() || null,
         address: formData.address.trim() || null,
         dateOfBirth: formData.dateOfBirth,
+        password: formData.password,
         // PascalCase redundancy fallback for .NET model binders
         FullNames: formData.fullNames.trim(),
         Surname: formData.surname.trim(),
@@ -66,6 +68,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         Email: formData.email.trim() || null,
         Address: formData.address.trim() || null,
         DateOfBirth: formData.dateOfBirth,
+        Password: formData.password,
       };
 
       await axios.post(
@@ -87,6 +90,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         email: '',
         address: '',
         dateOfBirth: '',
+        password: '',
       });
 
       // Call parent refresh callback
@@ -203,6 +207,21 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-gray-700 uppercase mb-1">
+              Password *
+            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="••••••••"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+            />
           </div>
 
           <div>

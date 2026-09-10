@@ -35,7 +35,12 @@ export default function AdminLogin() {
                 );
             }
 
-            localStorage.setItem("churchPulseToken", data.token);
+            // Save token key used across API pages
+            const jwtToken = data.token || data.accessToken;
+            if (jwtToken) {
+                localStorage.setItem("token", jwtToken);
+                localStorage.setItem("churchPulseToken", jwtToken);
+            }
 
             navigate("/dashboard");
         } catch (err) {
