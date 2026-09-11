@@ -116,18 +116,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Serve files from wwwroot
+app.UseStaticFiles();
 
 // Enable CORS BEFORE Authentication
 app.UseCors("AllowFrontend");
-
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
-
 app.MapControllers();
-
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

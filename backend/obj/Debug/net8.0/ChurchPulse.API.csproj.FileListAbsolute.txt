@@ -124,3 +124,4 @@ C:\Users\mthem\church-pulse\backend\obj\Debug\net8.0\refint\ChurchPulse.API.dll
 C:\Users\mthem\church-pulse\backend\obj\Debug\net8.0\ChurchPulse.API.pdb
 C:\Users\mthem\church-pulse\backend\obj\Debug\net8.0\ChurchPulse.API.genruntimeconfig.cache
 C:\Users\mthem\church-pulse\backend\obj\Debug\net8.0\ref\ChurchPulse.API.dll
+C:\Users\mthem\church-pulse\backend\bin\Debug\net8.0\ChurchPulse.API.staticwebassets.runtime.json

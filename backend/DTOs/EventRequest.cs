@@ -1,12 +1,10 @@
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace ChurchPulse.API.Models
+namespace ChurchPulse.API.DTOs
 {
-    public class Event
+    public class EventRequest
     {
-        [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         [Required]
         [MaxLength(150)]
         public string Title { get; set; } = string.Empty;
@@ -22,9 +20,6 @@ namespace ChurchPulse.API.Models
         [MaxLength(50)]
         public string Category { get; set; } = "General";
 
-        // Optional event poster/image
-        public string? ImageUrl { get; set; }
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public IFormFile? Image { get; set; }
     }
 }

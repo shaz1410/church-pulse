@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "vt6r5b59rPoSiS90JjVHwqf2c4hKhpBo7Z+/gFsjB0w=",
+  "Hash": "4pldwd2RvUEl7LqoBhokhH+cq3TXEnNuCy4hHQkqUMw=",
   "Source": "ChurchPulse.API",
   "BasePath": "_content/ChurchPulse.API",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ChurchPulse.API\\wwwroot",
+      "Source": "ChurchPulse.API",
+      "ContentRoot": "C:\\Users\\mthem\\church-pulse\\backend\\wwwroot\\",
+      "BasePath": "_content/ChurchPulse.API",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }
